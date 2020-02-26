@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582296105801.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3414776913",
+    "id" : "B540DA2B",
+    "lastKnownWriteTime" : 1582296026,
+    "last_content_update" : 1582298620175,
+    "path" : "~/Cours/Perso/Projets/Projet - R SHiny/conso_oil_worl_graph.Rmd",
+    "project_path" : "conso_oil_worl_graph.Rmd",
+    "properties" : {
+        "cursorPosition" : "10,0",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 6,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_markdown"
+}

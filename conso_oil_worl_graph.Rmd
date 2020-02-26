@@ -1,0 +1,46 @@
+---
+title: "conso_oil_world"
+output: html_document
+---
+
+```{r}
+library(readr)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+```
+
+```{r}
+
+conso <- read.csv("./data/global-fossil-fuel-consumption.csv", header = TRUE)
+colnames(conso) <- c("entity","code", "year", "charbon","petrol","gaz")
+conso
+```
+
+```{r}
+
+
+graph_conso <- plot_ly(conso, x = ~year, y = ~charbon, name = 'charbon', type = 'scatter', mode = 'none', stackgroup = 'one', fillcolor = '#F5FF8D') %>%
+  add_trace(y = ~petrol, name = 'Pétrole', fillcolor = '#50CB86') %>%
+  add_trace(y = ~gaz, name = 'gaz', fillcolor = '#4C74C9') %>%
+  layout(title = 'Consommation mondiale d énergie fossile en terawatt par heure',
+         xaxis = list(title = "année",
+                      gridcolor = 'rgb(255,255,255)',
+                      showgrid = TRUE,
+                      showline = FALSE,
+                      showticklabels = TRUE,
+                      tickcolor = 'rgb(127,127,127)',
+                      ticks = 'outside',
+                      zeroline = FALSE),
+         yaxis = list(title = "Consommation en terawatt par heure",
+                      gridcolor = 'rgb(255,255,255)',
+                      showgrid = TRUE,
+                      showline = FALSE,
+                      showticklabels = TRUE,
+                      tickcolor = 'rgb(127,127,127)',
+                      ticks = 'outside',
+                      zeroline = FALSE))
+graph_conso
+
+```
+

@@ -1,0 +1,170 @@
+#
+# This is a Shiny web application. You can run the application by clicking
+# the 'Run App' button above.
+#
+# Find out more about building applications with Shiny here:
+#
+#    http://shiny.rstudio.com/
+#
+
+library(shiny)
+library(shinythemes)
+library(datasets)
+library(dplyr)
+library(DT)
+
+library(shinydashboard)
+library(shinydashboardPlus)
+
+
+# Define UI for application that draws a histogram
+ui <- navbarPage("Iris Analisys",
+                 theme = shinytheme("cerulean"),
+                 
+                 tabPanel('Iris Graphs',
+   
+                 # Sidebar with a slider input for number of bins 
+                 sidebarLayout(
+                    sidebarPanel(
+                      
+                      headerPanel('Iris Graphs'),
+                      
+                      h4('Please, select some data to visualize plots.'),
+                      h4('Then, you can filter the data with the slider.'),
+                      
+                       # Select Box
+                       selectInput("select_x", label = h3("Please select a data :"), 
+                                   choices = list("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"), 
+                                   selected = "Sepal.Length"),
+                       
+                       sliderInput("slider_x", label = h3("Slider"), min = 0, 
+                                   max = 8, value = 5),
+                       
+                       # Select Box
+                       selectInput("select_y", label = h3("Please select a first data to analyse:"), 
+                                   choices = list("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width"), 
+                                   selected = "Petal Length"),
+                       
+                       sliderInput("slider_y", label = h3("Please select a second data to analyse:"), min = 0, 
+                                   max = 8, value = 5),
+                       
+                       # Button
+                       actionButton("action", label = "Refresh")
+                    ),
+                    
+                    # Show a plot of the generated distribution
+                    mainPanel(
+                      h1('Iris Plot Visualization'),
+                      textOutput("selection_x"),
+                      textOutput("selection_y"),
+                       plotOutput("distPlot")
+                    )
+                 )),
+                 
+                 tabPanel('Data Table',
+                          
+                          headerPanel('Iris Table'),
+                          h3('On this page, you can select a specie to see observations from the dataset Iris'),
+                          # Select Box
+                          selectInput("select_species",
+                                      label = h3("Please select a specie :"), 
+                                      choices = list('Setosa' = 'setosa',
+                                                     'Versicolor' = 'versicolor',
+                                                     'Virginica' = 'virginica',
+                                                     'All' = 'tout'),
+                                      selected = 'tout'),
+                          
+                          DT::dataTableOutput('iris_species')
+                          ),
+                 
+                 tabPanel('Some data info',
+    
+                            # Application title
+                            headerPanel("Iris Data Summary"),
+                            h3('On this page, you can select a specie to have a summary.'),
+                          
+                            
+                            # Sidebar with controls to select a dataset and specify the number
+                            # of observations to view
+                            sidebarPanel(
+                              selectInput("select_irissum", "Please select a specie :", 
+                                          choices = unique(iris$Species))
+                            ),
+                            
+                            # Show a summary of the dataset and an HTML table with the requested
+                            # number of observations
+                            mainPanel(
+                              verbatimTextOutput("summary")
+                            )
+                          ),
+              
+                 # Footer
+                 tags$footer("Dashboard By Meidi KADRI - 2020", align = "center", 
+                    style = "
+                             position:absolute;
+                             bottom:0;
+                             width:100%;
+                             height:50px;   /* Height of the footer */
+                             color: white;
+                             padding: 10px;
+                             background-color: #3A9AD1;
+                             z-index: 1000;")
+                 
+                 )
+
+
+# Define server logic required to draw a histogram
+server <- function(input, output, session) {
+  
+  # Onglet 1
+  output$selection_x <- renderText(paste("You have selected ", input$select_x, " to x."))
+  output$value_x <- renderPrint({ input$slider_x })
+  
+  output$selection_y <- renderText(paste("You have selected ", input$select_y, " to y."))
+  output$value_y <- renderPrint({ input$slider_y })
+  
+  # Déclaration des variables associées aux boutons
+  x <- eventReactive(input$action,
+                     input$select_x)
+
+  y <- eventReactive(input$action,
+                     input$select_y)
+  
+  slide_x <- eventReactive(input$action,
+                            input$slider_x)
+  
+  slide_y <- eventReactive(input$action,
+                           input$slider_y)
+  
+  output$distPlot <- renderPlot({
+    iris2 <- iris %>%
+      filter((!!as.symbol(input$select_x) < slide_x()) & (!!as.symbol(input$select_y) < slide_y()))
+    plot(iris2[[x()]], iris2[[y()]], 
+         xlim =  c(0, 8), ylim = c(0, 8), 
+         col = iris2$Species, xlab = input$select_x, ylab = input$select_y)
+
+  })
+  
+  # Onglet 2
+  output$iris_species = DT::renderDataTable({
+    if (input$select_species == 'tout') {
+      iris
+    }else{
+      iris %>%
+        filter(iris$Species == input$select_species)
+    }
+
+  })
+  
+  # Onglet 3
+  output$summary <- renderPrint({ 
+    iris_sum <- iris %>% 
+      filter(iris$Species == input$select_irissum)
+    summary(iris_sum)
+  })
+
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+

@@ -1,0 +1,42 @@
+library(plotly)
+library(rworldmap)
+
+library(tmap)    # for static and interactive maps
+library(leaflet) # for interactive maps
+library(mapview) # for interactive maps
+library(ggplot2) # tidyverse data visualization package
+library(shiny)   # for web applications
+
+conso <- read.csv("./data/global-fossil-fuel-consumption.csv", header = TRUE)
+colnames(conso) <- c("entity","code", "year", "charbon","petrol","gaz")
+
+prod <- read.csv('data/fossil-fuel-production-over-the-long-term.csv', sep = ',')
+colnames(prod) <- c("Entity","Code", "Year", "charbon","petrol","gaz")
+names(prod)
+
+
+graph_conso2 <- plot_ly(conso, x = ~year, y = ~charbon, name = 'charbon', type = 'scatter', mode = 'none', stackgroup = 'one', fillcolor = '#F5FF8D') %>%
+  add_trace(y = ~petrol, name = 'Pétrole', fillcolor = '#50CB86') %>%
+  add_trace(y = ~gaz, name = 'gaz', fillcolor = '#4C74C9') %>%
+  layout(title = 'Consommation mondiale d énergie fossile en terawatt par heure',
+         xaxis = list(title = "année",
+                      gridcolor = 'rgb(255,255,255)',
+                      showgrid = TRUE,
+                      showline = FALSE,
+                      showticklabels = TRUE,
+                      tickcolor = 'rgb(127,127,127)',
+                      ticks = 'outside',
+                      zeroline = FALSE),
+         yaxis = list(title = "Consommation en terawatt par heure",
+                      gridcolor = 'rgb(255,255,255)',
+                      showgrid = TRUE,
+                      showline = FALSE,
+                      showticklabels = TRUE,
+                      tickcolor = 'rgb(127,127,127)',
+                      ticks = 'outside',
+                      zeroline = FALSE))
+graph_conso2
+
+# map = tm_shape(world) + tm_polygons()
+# class(map)
+#> [1] "tmap"

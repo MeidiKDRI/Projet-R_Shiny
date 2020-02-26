@@ -1,0 +1,25 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582674199999.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1152685998",
+    "id" : "98142D86",
+    "lastKnownWriteTime" : 1581626614,
+    "last_content_update" : 1581626614,
+    "path" : "~/Cours/Perso/R/RShiny/first_app/app.R",
+    "project_path" : null,
+    "properties" : {
+        "cursorPosition" : "120,13",
+        "scrollLine" : "0"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 8,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}

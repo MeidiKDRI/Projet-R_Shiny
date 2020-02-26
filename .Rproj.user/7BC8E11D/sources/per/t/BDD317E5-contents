@@ -1,0 +1,16 @@
+library(ggplot2)
+
+prod <- read.csv('data/fossil-fuel-production-over-the-long-term.csv', sep = ',')
+names(prod)
+head(prod.Coal..terawatt.hours.)
+
+library(tmap)
+data("World")
+names(World)
+
+tmap_mode("view")
+data(World)
+carte <- tm_shape(World) +
+  tm_polygons("HPI", id = "name", popup.vars = TRUE)
+
+tmap_save(carte, filename = 'carte')

@@ -1,0 +1,26 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1582579972395.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "1438655360",
+    "id" : "BDD317E5",
+    "lastKnownWriteTime" : 1582675457,
+    "last_content_update" : 1582675457703,
+    "path" : "C:/Users/majes/Desktop/EcoleIAMicrosoft/Projet - R SHiny/test.R",
+    "project_path" : "test.R",
+    "properties" : {
+        "cursorPosition" : "15,0",
+        "scrollLine" : "0",
+        "tempName" : "Untitled2"
+    },
+    "read_only" : false,
+    "read_only_alternatives" : [
+    ],
+    "relative_order" : 3,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
